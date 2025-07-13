@@ -16,9 +16,18 @@ public:
 
     glm::vec3 getPosition();
     glm::vec3 getScale();
+    
+    // exists to prevent unnecessarily passing the matrix to the shader when it has not changed.
+    bool hasChanged();
 
 private:
 
+    void updateModelMatrix();
+
+    glm::mat4 m_ModelMatrix;
+    
     glm::vec3 m_Position;
     glm::vec3 m_Scale; 
+
+    bool m_HasChanged = false;
 };

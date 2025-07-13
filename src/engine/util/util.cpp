@@ -9,7 +9,7 @@ std::string Util::loadTextFromFile(const char* filepath)
     
     if (!file)
     {
-        std::println("Failed to load file {}", filepath);
+        std::println("util.cpp: Failed to load file {}", filepath);
         return " ";
     }
     
@@ -93,3 +93,15 @@ void Util::glDebugCallback(GLenum source, GLenum type, GLuint id, GLenum severit
     std::println("message: {}", message);
     std::println("id: {}", id);
 }
+
+void Util::printMatrix(glm::mat4 matrix)
+{
+    for (int i = 0; i < 4; i++) {
+        for (int j = 0; j < 4; j++)
+        {
+             std::print("{} " , matrix[i][j]);
+        }
+        std::println();
+    }
+}
+

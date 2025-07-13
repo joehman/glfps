@@ -12,6 +12,7 @@ public:
     Shader() {}
     Shader(std::string vertexShaderPath, std::string fragmentShaderPath);
 
+
     void use();
 
     void setInt   (int value,   const char* name);
@@ -23,6 +24,9 @@ public:
     unsigned int getProgramID() {return m_ProgramID;}
 private:
     unsigned int m_ProgramID;
+
+    const char* m_FragShaderPath;
+    const char* m_VertShaderPath;
 
 };
 

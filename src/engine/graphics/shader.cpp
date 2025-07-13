@@ -1,11 +1,11 @@
 #include "shader.hpp"
 #include <engine/util/util.hpp>
-#include <iostream>
+#include <print>
 
 #include <glm/glm.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
-void checkShaderComp(unsigned int shader)
+void checkShaderComp(unsigned int shader, const char* path)
 {
     int success;
     char infoLog[512];
@@ -14,7 +14,7 @@ void checkShaderComp(unsigned int shader)
     if (!success)
     {
         glGetShaderInfoLog(shader, 512, NULL, infoLog);
-        std::cout << "Shader Compilation Error!: \n" << infoLog << '\n';
+        std::println("Shader compilation error from: {} \n {}", path, infoLog);
     }
 }
 void checkProgramLink(unsigned int program)
@@ -27,8 +27,22 @@ void checkProgramLink(unsigned int program)
     if (!success)
     {
         glGetProgramInfoLog(program, 512, NULL, infoLog);
-        std::cout << "Shader Linking Error!: \n" << infoLog << '\n';
+        std::println("Shader Program Linking Error!: \n {} ", infoLog );
     }
+}
+void compileShader(uint shader, std::string source)
+{
+    const char* shaderSource = source.c_str(); 
+    glShaderSource(shader, 1, &shaderSource, NULL);
+    glCompileShader(shader);
+}
+
+//assumes uint program is already a created shader program
+void linkProgram(uint program, uint vertexShader, uint fragmentShader)
+{
+    glAttachShader(program, vertexShader);
+    glAttachShader(program, fragmentShader);
+    glLinkProgram(program);
 }
 
 Shader::Shader(std::string vertexShaderPath, std::string fragmentShaderPath)
@@ -37,29 +51,17 @@ Shader::Shader(std::string vertexShaderPath, std::string fragmentShaderPath)
     unsigned int fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
 
     std::string vertexSource = Util::loadTextFromFile(vertexShaderPath.c_str());
-    //looks strange but segfaults without it
-    const char* vSource = vertexSource.c_str();
-    glShaderSource(vertexShader, 1, &vSource, NULL);
-    glCompileShader(vertexShader);
-
-    checkShaderComp(vertexShader);
+    compileShader(vertexShader, vertexSource);
+    checkShaderComp(vertexShader, vertexShaderPath.c_str());
 
     std::string fragmentShaderSource = Util::loadTextFromFile(fragmentShaderPath.c_str());
-    const char* fSource = fragmentShaderSource.c_str();
-    glShaderSource(fragmentShader, 1, &fSource, NULL);
-    glCompileShader(fragmentShader);
-
-
-    checkShaderComp(fragmentShader);
+    compileShader(fragmentShader, fragmentShaderSource);
+    checkShaderComp(fragmentShader, fragmentShaderPath.c_str());
 
     this->m_ProgramID = glCreateProgram();
-    glAttachShader(m_ProgramID, vertexShader);
-    glAttachShader(m_ProgramID, fragmentShader);
-    glLinkProgram(m_ProgramID);
-    
+    linkProgram(m_ProgramID, vertexShader, fragmentShader);
     checkProgramLink(m_ProgramID);
     
-
     glDeleteShader(vertexShader);
     glDeleteShader(fragmentShader);
 }

@@ -47,11 +47,22 @@ void Game::run()
     };
     
     Mesh mesh(verts, indices);
-    
-    Shader shader("shaders/vshader.vert", "shaders/fshader.frag");
+    Mesh mesh1(verts, indices); 
 
-    Material mat(shader, "free.png");
+    Shader shader("shaders/3D/vshader.vert", "shaders/3D/fshader.frag");
+    Shader shader1(shader);
 
+    Transform transform({0.0f, 0.0f, 0.0f});
+
+    int screenWidth, screenHeight;
+    m_Engine.window.getDimensions(&screenWidth, &screenHeight);
+
+    Camera cam({0.0f,0.0f,3.0f}, (float)screenWidth / (float)screenHeight);
+
+
+    Material mat(shader, Texture("free.png"), transform, cam);
+
+    glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
     while (!m_Engine.shouldClose())
     {
         m_Engine.frameStart();

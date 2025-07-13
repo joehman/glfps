@@ -14,7 +14,7 @@ struct EngineConfigOptions {
 
 class Engine { 
 public:
-    Engine() : m_Window() {}
+    Engine() : window() {}
     Engine(struct EngineConfigOptions options); 
 
     void setShouldClose(bool set);
@@ -25,7 +25,5 @@ public:
 
 
     Input input;
-    
-private:
-    Window m_Window;
+    Window window;
 };
