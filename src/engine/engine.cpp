@@ -1,6 +1,7 @@
 #include "engine.hpp"
 #include "GLFW/glfw3.h"
 #include <GL/gl.h>
+#include <cstdint>
 #include "engine/input/input.hpp"
 #include "util/util.hpp"
 
@@ -26,7 +27,6 @@ Engine::Engine(struct EngineConfigOptions options)
     
     input.init(&m_Window);
 
-    m_Window.shouldClose();
 }
 
 void Engine::setShouldClose(bool set)
@@ -42,6 +42,7 @@ bool Engine::shouldClose()
 void Engine::frameStart()
 {
     m_Window.clear();
+    input.init(&m_Window);
 }
 
 void Engine::frameEnd()

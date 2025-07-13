@@ -1,8 +1,11 @@
 #pragma once
 
 #include <GLFW/glfw3.h>
-#include <engine/window.hpp>
 
+enum KeyState {
+    KEY_PRESSED = GLFW_PRESS,
+    KEY_RELEASED = GLFW_RELEASE
+};
 
 
 enum Key {
@@ -67,7 +70,7 @@ KEY_UP            = GLFW_KEY_UP,
 
 };
 
-
+class Window;
 
 class Input {
 public:
@@ -78,7 +81,6 @@ public:
 
     bool getKeyPressed(Key key);
     bool getKeyReleased(Key key);
-
-private:
+//private:
     Window* m_pWindow;
 };

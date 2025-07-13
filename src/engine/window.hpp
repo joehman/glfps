@@ -3,7 +3,7 @@
 #ifndef WINDOW_HPP
 #define WINDOW_HPP
 #include <GLFW/glfw3.h>
-
+#include "input/input.hpp"
 
 class Window {
 public:
@@ -29,6 +29,8 @@ public:
     void swapBuffers();
 
     void setSwapInterval(int interval);
+
+    KeyState getKeyState(Key key);
 
     // would love to get rid of this!
     GLFWwindow* getGLFWWindow();

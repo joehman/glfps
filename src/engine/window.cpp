@@ -1,5 +1,4 @@
-#include "window.hpp"
-#include "GLFW/glfw3.h"
+#include "window.hpp" 
 #include <GL/gl.h>
 #include <print>
 #include <stdexcept>
@@ -89,9 +88,7 @@ void Window::setShouldClose(bool shouldClose)
 {
     glfwSetWindowShouldClose(m_Window, shouldClose);
 }
-
-// only for internal use
-GLFWwindow* Window::getGLFWWindow()
+KeyState Window::getKeyState(Key key)
 {
-    return m_Window; 
+    return (KeyState)glfwGetKey(m_Window, key);
 }

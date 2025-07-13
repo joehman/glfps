@@ -6,6 +6,7 @@
 #include "engine/graphics/shader.hpp"
 #include "engine/graphics/mesh.hpp"
 #include "engine/graphics/texture.hpp"
+#include "engine/input/input.hpp"
 
 
 
@@ -49,13 +50,18 @@ void Game::run()
     
     Shader shader("shaders/vshader.vert", "shaders/fshader.frag");
 
-    Material mat("shaders/vshader.vert", "shaders/fshader.frag", "free.png");
+    Material mat(shader, "free.png");
 
     while (!m_Engine.shouldClose())
     {
         m_Engine.frameStart();
         
-        
+        if (m_Engine.input.getKeyPressed(KEY_ESCAPE))
+        {
+            m_Engine.setShouldClose(true);
+        }
+
+
         mesh.draw(mat);
 
         m_Engine.frameEnd();
