@@ -1,0 +1,6 @@
+-std=c++23
+-Isrc/
+-Isrc/dependencies/
+-Ilibraries/cglm/include
+-Ilibraries/glfw/include
+-Ilibraries/nuklear

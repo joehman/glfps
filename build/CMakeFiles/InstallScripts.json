@@ -1,0 +1,13 @@
+{
+	"InstallScripts" : 
+	[
+		"/home/jonte/Documents/dev/fpsopengl/build/cmake_install.cmake",
+		"/home/jonte/Documents/dev/fpsopengl/build/libraries/glfw/cmake_install.cmake",
+		"/home/jonte/Documents/dev/fpsopengl/build/libraries/glfw/src/cmake_install.cmake",
+		"/home/jonte/Documents/dev/fpsopengl/build/libraries/glfw/docs/cmake_install.cmake",
+		"/home/jonte/Documents/dev/fpsopengl/build/libraries/glm/cmake_install.cmake",
+		"/home/jonte/Documents/dev/fpsopengl/build/libraries/glm/glm/cmake_install.cmake",
+		"/home/jonte/Documents/dev/fpsopengl/build/src/cmake_install.cmake"
+	],
+	"Parallel" : false
+}
