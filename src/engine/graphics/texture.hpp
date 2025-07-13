@@ -2,7 +2,9 @@
 
 #include  <stb_image.h>
 #include <glad/glad.h>
-#include <sys/types.h>
+#include <inttypes.h>
+
+
 
 class Image {
 public:
@@ -61,7 +63,7 @@ struct TexParameters {
 class Texture 
 {
 public:
-    Texture() : m_Texture((uint)NULL)  {};
+    Texture() : m_Texture((unsigned int)NULL)  {};
     Texture(const char* texPath, TexParameters texParams = { 
             .wrapMode = CLAMP_TO_BORDER, 
             .filterMode = POINT,

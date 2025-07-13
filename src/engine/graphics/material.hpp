@@ -3,6 +3,7 @@
 #include "engine/graphics/texture.hpp"
 #include "shader.hpp"
 #include <string>
+#include <optional>
 
 class Material : public Shader{
 public:

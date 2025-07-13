@@ -12,7 +12,7 @@ bool Input::getKeyPressed(Key key)
 
     int state = glfwGetKey(m_pWindow->getGLFWWindow(), key);
 
-    if(state == GLFW_PRESS)
+    if(state == key)
     {
         return true;
     }

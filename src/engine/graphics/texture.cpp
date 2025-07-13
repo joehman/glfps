@@ -1,7 +1,8 @@
 #include "texture.hpp"
 #include <fstream>
-#include <GL/gl.h>
 #include <print>
+
+#include <filesystem>
 
 
 #define STB_IMAGE_IMPLEMENTATION
@@ -10,12 +11,7 @@
 Texture::Texture(const char* texPath, TexParameters texParams)
 {
 
-
     Image image(texPath);
-    if (image.getData() == nullptr)
-    {
-        std::println("Failed to find image for texture!");
-    }
 
     int nrChannels = image.getNrChannels();
     int width = image.getWidth();
@@ -86,16 +82,33 @@ Image& Image::operator=(Image&& other) {
 } 
 Image::Image(const char* path)
 {
-    std::fstream file(path);
-    if (!file.good())
+    std::ifstream file(path, std::ios::binary | std::ios::ate);
+    if (!file.is_open())
     {
         std::println("Failed to find Image at {}", path);
         m_Data = nullptr;
         return;
     }
+    
+    std::streamsize size = file.tellg();
+    file.seekg(0, std::ios::beg);
+
+    std::vector<unsigned char> buffer(size);
+    if (!file.read(reinterpret_cast<char*>(buffer.data()), size))
+    {
+        std::println("Failed to read image {} into buffer", path);
+        m_Data = nullptr;
+        return;
+    }
+
 
     stbi_set_flip_vertically_on_load(true);
-    m_Data = stbi_load(path, &m_Width,&m_Height,&m_NrChannels, 0); 
+    m_Data = stbi_load_from_memory(buffer.data(),static_cast<int>(size), &m_Width, &m_Height, &m_NrChannels, 0);
+
+    if (m_Data == nullptr)
+    {
+        std::println("Failed to load image {}, reason: {}", path, stbi_failure_reason());
+    }
 }
 Image::~Image()
 {
