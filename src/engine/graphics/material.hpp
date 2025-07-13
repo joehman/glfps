@@ -1,20 +1,21 @@
 #pragma once
 
-#include "engine/graphics/texture.hpp"
+#include "texture.hpp"
 #include "shader.hpp"
-#include <string>
 #include <optional>
+#include "camera.hpp"
 
 class Material : public Shader{
 public:
-    Material(const char* vertexShaderPath, const char* fragmentShaderPath);
-    Material(const char* vertexShaderPath, const char* framgentShaderPath, const char* texPath); 
-
+    Material(Shader shader, Texture tex, Camera cam);
     Material(Shader shader, Texture tex);
+    Material(Shader shader, Camera cam);
     Material(Shader shader);
 
+    
     void use();
 
 private:
     std::optional<Texture> m_Texture;
+    std::optional<Camera> m_Camera;
 };

@@ -1,5 +1,9 @@
 #include "shader.hpp"
 #include <engine/util/util.hpp>
+#include <iostream>
+
+#include <glm/glm.hpp>
+#include <glm/gtc/type_ptr.hpp>
 
 void checkShaderComp(unsigned int shader)
 {
@@ -63,4 +67,25 @@ Shader::Shader(std::string vertexShaderPath, std::string fragmentShaderPath)
 void Shader::use()
 {
     glUseProgram(this->m_ProgramID);
+}
+void Shader::setInt(int value, const char* name)
+{
+    int location = glGetUniformLocation(m_ProgramID, name);
+    glUniform1i(location, value);
+}
+// note : you can also set ints with this function
+void Shader::setBool(bool value, const char* name)
+{
+    int location = glGetUniformLocation(m_ProgramID, name);
+    glUniform1i(location, (int)value); 
+}
+void Shader::setFloat(float value, const char* name)
+{
+    int location = glGetUniformLocation(m_ProgramID, name);
+    glUniform1f(location, value);
+}
+void Shader::setMat4(glm::mat4 value, const char* name)
+{
+    int location = glGetUniformLocation(m_ProgramID, name);
+    glUniformMatrix4fv(location,1, GL_FALSE, glm::value_ptr(value));
 }

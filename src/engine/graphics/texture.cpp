@@ -26,8 +26,6 @@ Texture::Texture(const char* texPath, TexParameters texParams)
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, texParams.mipMapFilteringMode);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, texParams.filterMode);
 
-    std::println("nrChannels: {}", image.getNrChannels());
-
     if (nrChannels == 3)
     {
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, image.getData());
